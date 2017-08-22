@@ -14,6 +14,7 @@
     "prettier": "^1.5.2"
   },
   "dependencies": {
+    "bulma": "^0.5.1",
     "marko": "^4.2.4",
     "marko-starter": "^1.0.0"
   },
