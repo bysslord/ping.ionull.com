@@ -1,0 +1,17 @@
+class {
+    onCreate() {
+        this.state = {
+            value: 0
+        }
+    }
+
+    onInput(input) {
+        this.state.value = input.value;
+    }
+
+    increase () {
+        console.info("added")
+    }
+}
+
+progress class="progress" value="${state.value}" max="100"
