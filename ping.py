@@ -1,23 +1,56 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
-from flask import Flask, render_template, request
-from flask_socketio import SocketIO
+import abc
+from flask import Flask, g, render_template
+from flask_sijax import Sijax, route, Response
 
-from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.interval import IntervalTrigger
-
-app = Flask(__name__)
-socketio = SocketIO(app)
-
-scheduler = BackgroundScheduler(
-    jobstores={'default': SQLAlchemyJobStore(os.environ['SQL_ALCHEMY_URI'])}
+app = Flask(
+    __name__, template_folder='template', static_folder='static'
 )
 
+CWD = os.path.dirname(__file__)
+os.chdir(CWD)
 
-def ping(url):
-    print(url)
+app.config['SIJAX_STATIC_PATH']=os.path.join(CWD, 'static', 'js', 'sijax')
+app.config['SIJAX_JSON_URI']=os.path.join(CWD, 'static', 'js', 'sijax', 'json2.js')
+
+Sijax(app)
+
+
+_router = {}
+
+
+class AutoRoute(type):
+    def __init__(cls, what, bases=None, dict=None):
+        """
+        :type cls: Handler
+        :param what:
+        :param bases:
+        :param dict:
+        """
+        print(cls._route(), bases)
+        super().__init__(what, bases, dict)
+
+
+class Handler(object, metaclass=AutoRoute):
+
+    @classmethod
+    def _route(cls):
+        if cls.__name__ == 'Handler':
+            return '/', 'index.html'
+        return f'{str(cls.__name__).lower()}', f'{str(cls.__name__).lower()}.html'
+
+    @staticmethod
+    def render():
+        return render_template(Handler.template())
+
+
+class Test(Handler):
+
+    @staticmethod
+    def log(response: Response, *args, **kwargs):
+        print(args, kwargs)
 
 
 @app.route('/')
@@ -25,12 +58,18 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/job/ping', methods=['DELETE', 'POST'])
-def job_ping():
-    scheduler.add_job(ping, IntervalTrigger(seconds=1), args=(request.form['url'],))
-    return 'success'
+@route(app, '/test')
+def test():
+    if g.sijax.is_sijax_request:
+        # Sijax request detected - let Sijax handle it
+        g.sijax.register_callback('say_hi', str)
+        return g.sijax.process_request()
+
+    return 'test'
+
 
 
 if __name__ == '__main__':
-    scheduler.start()
-    socketio.run(app, debug=True)
+    app.jinja_env.auto_reload = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.run(port=5000, debug=True)
