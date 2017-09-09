@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
-import abc
 from flask import Flask, g, render_template
 from flask_sijax import Sijax, route, Response
 
@@ -66,7 +65,6 @@ def test():
         return g.sijax.process_request()
 
     return 'test'
-
 
 
 if __name__ == '__main__':
