@@ -12,8 +12,8 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . /app
 
-RUN pip3 install -r requirements.txt
+RUN pip3.6 install -r requirements.txt
 
 EXPOSE 5000
 
-CMD [ "python3","ping.py"]
+CMD [ "python3.6","ping.py"]
