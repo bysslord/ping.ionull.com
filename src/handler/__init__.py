@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from collections import OrderedDict
+
 from flask import Flask, g, render_template, redirect, request
 from flask_sijax import Sijax, route
 from sijax.response.base import BaseResponse
@@ -28,7 +30,7 @@ class AutoRoute(type):
     Auto routing
     """
 
-    route = {}
+    route = OrderedDict()
 
     def __init__(cls, what, bases=None, extra=None):
         """
@@ -37,9 +39,9 @@ class AutoRoute(type):
         :param bases:
         :param extra:
         """
-        print(cls)
         if object not in bases:
-            AutoRoute.route[cls.__name__.lower()] = cls
+            print(f'Routing {cls.url()} -> {cls}')
+            AutoRoute.route[cls.url()] = cls
         super().__init__(what, bases, extra)
 
 
@@ -49,12 +51,20 @@ class Handler(object, metaclass=AutoRoute):
     """
 
     @staticmethod
-    def render():
+    def render(**kwargs):
         """
         render template
         :return:
         """
         raise NotImplementedError()
+
+    @classmethod
+    def url(cls):
+        """
+        route name
+        :return:
+        """
+        return f'/{cls.__name__.lower()}'
 
 
 @route(app, '/<page>')
@@ -67,7 +77,7 @@ def index(page: str = None):
     """
     if not page:
         page = 'home'
-    handler: Handler = AutoRoute.route.get(page)
+    handler: Handler = AutoRoute.route.get(f'/{page}')
     if not handler:
         return f'Page "{page}" not found', 404
     if g.sijax.is_sijax_request:
@@ -75,4 +85,4 @@ def index(page: str = None):
         g.sijax.register_object(handler)
         return g.sijax.process_request()
 
-    return handler.render()
+    return handler.render(navbar=AutoRoute.route)

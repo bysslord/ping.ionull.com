@@ -5,13 +5,13 @@ __author__ = 'xiwei'
 from handler import Handler, render_template, BaseResponse
 
 
-class Home(Handler):
+class About(Handler):
     """
     home page
     """
 
-    name = '主页'
-    order = 1
+    name = '关于'
+    order = 999
 
     @staticmethod
     def render(**kwargs):
@@ -19,7 +19,7 @@ class Home(Handler):
         render home page
         :return:
         """
-        return render_template('index.html', active=Home.url(), **kwargs)
+        return render_template('about.html', active=About.url(), **kwargs)
 
     @staticmethod
     def alert(response: BaseResponse):

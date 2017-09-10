@@ -1,22 +1,23 @@
 /**
  * Created by haizhi on 2017/8/24.
  */
-function executeFinished() {
-    $('#execute').removeClass('is-loading');
+
+function alert(level, title, message) {
+    var el = $('.alert');
+    $('.alert-title').html(title);
+    $('.alert-message').html(message);
+    el.addClass('alert-' + level);
+    el.show();
 }
-
-
-function renderJson(data) {
-    console.info(data);
-    $("#result").JSONView(data);
-}
-
 
 $(document).ready(
     function () {
-        $('#execute').click(function () {
-            $('#execute').addClass('is-loading');
-            Sijax.request('execute', [$('#connector_id').val(), $('#sql').val()]);
+        $('#alert').click(function () {
+            alert('warning', '错误', '对不起...');
+        });
+
+        $('#alert-close').click(function () {
+            $(this).parent().hide();
         });
 
         $('#icon-json').click(function () {

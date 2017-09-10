@@ -1,2 +1,3 @@
 flask
+sijax
 flask-sijax

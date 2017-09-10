@@ -20,4 +20,4 @@ def _auto_import():
 
 if __name__ == '__main__':
     _auto_import()
-    app.run(port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

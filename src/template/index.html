@@ -1,19 +1,79 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="/static/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
-    <script type="text/javascript">
-        {{ g.sijax.get_js()|safe }}
-    </script>
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+
     <title>PingPong</title>
 </head>
 <body>
-    <div>s2ssssssss</div>
-    <div>s2ssssssss</div>
-    <a href="javascript://" onclick="Sijax.request('alert');">Click here</a>
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Ping</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                {% for nav, handler in navbar.items() %}
+                    <li {% if active == nav %} class="active" {% endif %}><a href="{{ nav }}">{{ handler.name }}</a></li>
+                {% endfor %}
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="success"><a href="/try" role="button">免费试用</a></li>
+                <li><a href="/login">登录</a></li>
+                <li><a href="/">注册</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="col-lg-4 col-lg-offset-4 alert fade in" role="alert">
+    <button type="button" class="close" id="alert-close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="alert-title"></h4>
+    <p class="alert-message"></p>
+</div>
+
+<div class="container">
+    {% block container %}
+
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h1>Navbar example</h1>
+        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It
+            includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+        <p>To see the difference between static and fixed top navbars, just scroll.</p>
+        <p>
+            <a class="btn btn-lg btn-primary" role="button" id="alert" data-dismiss="alert">View navbar docs &raquo;</a>
+        </p>
+    </div>
+
+    {% endblock %}
+
+</div> <!-- /container -->
+
+<script type="text/javascript" src="/static/js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    {{ g.sijax.get_js()|safe }}
+</script>
+<script type="text/javascript" src="static/js/script.js"></script>
 </body>
 </html>
