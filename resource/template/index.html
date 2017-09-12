@@ -5,11 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <link rel="shortcut icon" href="static/img/httping.png" type="image/x-icon">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/style.css">
 
-    <title>PingPong</title>
+    <title>HTTPing</title>
 </head>
 <body>
 
@@ -24,19 +24,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Ping</a>
+            <a class="navbar-brand" href="/">HTTPing</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                {% for nav, handler in navbar.items() %}
-                    <li {% if active == nav %} class="active" {% endif %}><a href="{{ nav }}">{{ handler.name }}</a></li>
+                {% for handler in navbar['left'] %}
+                    <li {% if active == handler.url() %} class="active" {% endif %}><a href="{{ handler.url() }}">{{ handler.name }}</a></li>
                 {% endfor %}
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="success"><a href="/try" role="button">免费试用</a></li>
-                <li><a href="/login">登录</a></li>
-                <li><a href="/">注册</a></li>
+                {% for handler in navbar['right'] %}
+                    <li {% if active == handler.url() %} class="active" {% endif %}><a href="{{ handler.url() }}">{{ handler.name }}</a></li>
+                {% endfor %}
+
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -46,7 +47,6 @@
     <button type="button" class="close" id="alert-close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="alert-title"></h4>
     <p class="alert-message"></p>
 </div>
 
