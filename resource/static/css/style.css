@@ -6,3 +6,7 @@ body {
     z-index: 999;
     position: fixed;
 }
+
+.login-form {
+    margin-top: 10%;
+}

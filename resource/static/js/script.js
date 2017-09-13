@@ -12,6 +12,8 @@ function alert(level, title, message) {
 
 $(document).ready(
     function () {
+        // $('#alert').hide();
+
         $('#alert').click(function () {
             alert('warning', '错误', '对不起...');
         });
