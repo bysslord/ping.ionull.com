@@ -1,3 +1,6 @@
 flask
 sijax
 flask-sijax
+flask-sqlalchemy
+requests
+pymysql

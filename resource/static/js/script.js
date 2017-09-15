@@ -2,9 +2,9 @@
  * Created by haizhi on 2017/8/24.
  */
 
-function alert(level, title, message) {
+function alert(message, level) {
+    level = typeof level !== 'undefined' ?  level : "danger";
     var el = $('.alert');
-    $('.alert-title').html(title);
     $('.alert-message').html(message);
     el.addClass('alert-' + level);
     el.show();
@@ -12,18 +12,10 @@ function alert(level, title, message) {
 
 $(document).ready(
     function () {
-        // $('#alert').hide();
-
-        $('#alert').click(function () {
-            alert('warning', '错误', '对不起...');
-        });
+        $('#alert').hide();
 
         $('#alert-close').click(function () {
             $(this).parent().hide();
-        });
-
-        $('#icon-json').click(function () {
-            Sijax.request('json', [$('#connector_id').val()])
         });
     }
 );

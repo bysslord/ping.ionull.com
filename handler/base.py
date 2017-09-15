@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'xiwei'
 
+from handler import render_template
+
 
 class AutoRoute(type):
     """
@@ -27,15 +29,20 @@ class Handler(object, metaclass=AutoRoute):
     """
     Base Handler
     """
-    order = 999
+    def __init__(self):
+        pass
 
-    @staticmethod
-    def render(**kwargs):
+    @property
+    def visible(self):
+        return True
+
+    @classmethod
+    def render(cls, navbar: dict):
         """
         render template
         :return:
         """
-        raise NotImplementedError()
+        return render_template(f'{cls.url()}.html', navbar=navbar)
 
     @classmethod
     def url(cls):
@@ -43,5 +50,5 @@ class Handler(object, metaclass=AutoRoute):
         route name
         :return:
         """
-        return f'/{cls.__name__.lower()}'
+        return cls.__name__.lower()
 

@@ -10,16 +10,9 @@ class About(Handler):
     home page
     """
 
-    name = '关于'
-    order = 999
-
-    @staticmethod
-    def render(**kwargs):
-        """
-        render home page
-        :return:
-        """
-        return render_template('about.html', active=About.url(), **kwargs)
+    @property
+    def name(self):
+        return '关于'
 
     @staticmethod
     def alert(response: BaseResponse):

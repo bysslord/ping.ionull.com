@@ -14,14 +14,6 @@ class SignUp(Handler):
     order = 1
 
     @staticmethod
-    def render(**kwargs):
-        """
-        render home page
-        :return:
-        """
-        return render_template('signup.html', active=SignUp.url(), **kwargs)
-
-    @staticmethod
     def alert(response: BaseResponse):
         """
         alert a message

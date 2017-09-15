@@ -13,14 +13,6 @@ class Free(Handler):
     name = '免费试用'
 
     @staticmethod
-    def render(**kwargs):
-        """
-        render home page
-        :return:
-        """
-        return render_template('free.html', active=Free.url(), **kwargs)
-
-    @staticmethod
     def alert(response: BaseResponse):
         """
         alert a message

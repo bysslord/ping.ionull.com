@@ -13,14 +13,6 @@ class Login(Handler):
     name = '登录'
 
     @staticmethod
-    def render(**kwargs):
-        """
-        render home page
-        :return:
-        """
-        return render_template('login.html', active=Login.url(), **kwargs)
-
-    @staticmethod
     def alert(response: BaseResponse):
         """
         alert a message

@@ -5,12 +5,21 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="static/img/httping.png" type="image/x-icon">
+    <link rel="shortcut icon" href="static/img/eye.png" type="image/x-icon">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="static/css/style.css">
 
-    <title>HTTPing</title>
+
+    <script type="text/javascript" src="/static/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        {{ g.sijax.get_js()|safe }}
+    </script>
+    <script type="text/javascript" src="static/js/script.js"></script>
+
+    <title>Eyes of Noah</title>
 </head>
 <body>
 
@@ -25,18 +34,22 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">HTTPing</a>
+            <a class="navbar-brand" href="/">Eyes of Noah</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 {% for handler in navbar['left'] %}
-                    <li {% if active == handler.url() %} class="active" {% endif %}><a href="{{ handler.url() }}">{{ handler.name }}</a></li>
+                    {% if handler.visible %}
+                        <li {% if active == handler.url() %} class="active" {% endif %}><a href="{{ handler.url() }}">{{ handler.name }}</a></li>
+                    {% endif %}
                 {% endfor %}
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% for handler in navbar['right'] %}
-                    <li {% if active == handler.url() %} class="active" {% endif %}><a href="{{ handler.url() }}">{{ handler.name }}</a></li>
+                    {% if handler.visible %}
+                        <li {% if active == handler.url() %} class="active" {% endif %}><a href="{{ handler.url() }}">{{ handler.name }}</a></li>
+                    {% endif %}
                 {% endfor %}
 
             </ul>
@@ -44,7 +57,7 @@
     </div>
 </nav>
 
-<div class="col-lg-4 col-lg-offset-4 col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 alert fade in" role="alert">
+<div id="alert" class="col-lg-4 col-lg-offset-4 col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 alert fade in" role="alert">
     <button type="button" class="close" id="alert-close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -61,20 +74,17 @@
             includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
         <p>To see the difference between static and fixed top navbars, just scroll.</p>
         <p>
-            <a class="btn btn-lg btn-primary" role="button" id="alert" data-dismiss="alert">View navbar docs &raquo;</a>
+            <a class="btn btn-lg btn-primary" role="button" data-dismiss="alert">View navbar docs &raquo;</a>
         </p>
     </div>
 
     {% endblock %}
+    {% block script %}
+        <script type="text/javascript">
+        </script>
+    {% endblock %}
 
 </div> <!-- /container -->
 
-<script type="text/javascript" src="/static/js/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
-<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    {{ g.sijax.get_js()|safe }}
-</script>
-<script type="text/javascript" src="static/js/script.js"></script>
 </body>
 </html>
