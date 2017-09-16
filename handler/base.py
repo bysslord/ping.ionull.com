@@ -34,6 +34,10 @@ class Handler(object, metaclass=AutoRoute):
 
     @property
     def visible(self):
+        """
+        is visible in web
+        :return:
+        """
         return True
 
     @classmethod

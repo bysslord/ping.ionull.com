@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'xiwei'
 
-from handler import Handler, render_template, BaseResponse
+from handler import Handler, BaseResponse
+from util.session import is_logged_in
 
 
 class Free(Handler):
@@ -11,6 +12,10 @@ class Free(Handler):
     """
 
     name = '免费试用'
+
+    @property
+    def visible(self):
+        return not is_logged_in()
 
     @staticmethod
     def alert(response: BaseResponse):

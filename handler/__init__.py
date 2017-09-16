@@ -12,6 +12,7 @@ from handler.login import Login
 from handler.signup import SignUp
 from handler.alert import Alert
 from handler.profile import Profile
+from handler.free import Free
 
 __all__ = ['app', 'render_template', 'redirect', 'BaseResponse', 'request', 'Handler']
 
@@ -29,6 +30,10 @@ allow_anonymous = (
 
 @app.before_request
 def before_request():
+    """
+    login check
+    :return:
+    """
     if request.path not in allow_anonymous and not is_logged_in():
         redirect('login')
 
@@ -49,4 +54,4 @@ def index(page: str = 'index'):
         g.sijax.register_object(handler())
         return g.sijax.process_request()
 
-    return handler().render(navbar=dict(left=(Index(), Alert(), About()), right=(SignUp(), Login(), Profile())))
+    return handler().render(navbar=dict(left=(Index(), Alert(), About()), right=(Free(), Login(), Profile())))
