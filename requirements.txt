@@ -4,3 +4,4 @@ flask-sijax
 flask-sqlalchemy
 requests
 pymysql
+coloredlogs

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'xiwei'
 
-from handler import Handler, BaseResponse
+from handler import Handler, render_template, BaseResponse
 from util.session import is_logged_in
 
 

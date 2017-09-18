@@ -4,13 +4,13 @@ from flask import Flask, g, render_template, redirect, request, session
 from flask_sijax import Sijax, route
 from sijax.response.base import BaseResponse
 from util.session import is_logged_in
+from util.logger import log as logger
 from handler.base import AutoRoute, Handler
 
 from handler.index import Index
 from handler.about import About
 from handler.login import Login
 from handler.signup import SignUp
-from handler.alert import Alert
 from handler.profile import Profile
 from handler.free import Free
 
@@ -23,19 +23,30 @@ app = Flask(
 Sijax(app)
 
 
-allow_anonymous = (
-    '/login'
-)
+allow_anonymous = {
+    '/login',
+    '/log',
+    '/index',
+    '/',
+    '/about',
+    '/free'
+}
 
 
 @app.before_request
 def before_request():
-    """
-    login check
-    :return:
-    """
-    if request.path not in allow_anonymous and not is_logged_in():
-        redirect('login')
+    if request.path.startswith('/static/'):
+        return None
+    elif request.path not in allow_anonymous and not is_logged_in():
+        return redirect('login')
+
+
+@app.route('/log/<string:level>', methods=['POST'])
+def log(level):
+    func = getattr(logger, level, None)
+    if callable(func):
+        func(request.form.get('message'))
+    return ''
 
 
 @route(app, '/<page>')
@@ -54,4 +65,4 @@ def index(page: str = 'index'):
         g.sijax.register_object(handler())
         return g.sijax.process_request()
 
-    return handler().render(navbar=dict(left=(Index(), Alert(), About()), right=(Free(), Login(), Profile())))
+    return handler().render(navbar=dict(left=(Index(), About()), right=(Free(), Login(), Profile())))

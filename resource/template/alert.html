@@ -1,7 +1,22 @@
 {% extends "index.html" %}
 
 {% block container %}
-    <a class="btn-primary" id="emit">alert</a>
+    <div class="row">
+    {% for c in cards %}
+        <div class="col-lg-4">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ c.domain }} - {{ c.ds_name }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{ c.now() - c.error_at }}</p>
+                    <button class="btn btn-primary">处理</button>
+                    <button class="btn btn-danger">屏蔽</button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}
 
 {% block script %}

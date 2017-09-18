@@ -3,6 +3,7 @@
 __author__ = 'xiwei'
 
 from handler import Handler, render_template, BaseResponse
+from util.session import is_logged_in
 
 
 class Index(Handler):
@@ -11,6 +12,10 @@ class Index(Handler):
     """
 
     name = '主页'
+
+    @property
+    def visible(self):
+        return True
 
     @staticmethod
     def alert(response: BaseResponse):

@@ -11,6 +11,7 @@ app.config['SIJAX_STATIC_PATH'] = os.path.join(CWD, 'resource', 'static', 'js', 
 app.config['SIJAX_JSON_URI'] = os.path.join(CWD, 'resource', 'static', 'js', 'sijax', 'json2.js')
 app.config['SQLALCHEMY_DATABASE_URI'] = config.get('db', 'uri')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SECRET_KEY'] = config.get('global', 'secret')
 
 
 if __name__ == '__main__':

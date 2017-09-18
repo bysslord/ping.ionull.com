@@ -34,19 +34,18 @@ class Handler(object, metaclass=AutoRoute):
 
     @property
     def visible(self):
-        """
-        is visible in web
-        :return:
-        """
         return True
 
-    @classmethod
-    def render(cls, navbar: dict):
+    @property
+    def render_kwargs(self):
+        return {}
+
+    def render(self, navbar: dict):
         """
         render template
         :return:
         """
-        return render_template(f'{cls.url()}.html', navbar=navbar)
+        return render_template(f'{self.url()}.html', navbar=navbar, active=self.url(), **self.render_kwargs)
 
     @classmethod
     def url(cls):

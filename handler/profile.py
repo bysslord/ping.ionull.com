@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'xiwei'
 
-from handler import Handler, BaseResponse, session
-from util.session import is_logged_in
+from handler import Handler, BaseResponse
+from util.session import is_logged_in, session
 
 
 class Profile(Handler):
@@ -26,4 +26,5 @@ class Profile(Handler):
         :param response:
         :return:
         """
+        del session['username']
         response.redirect('/login')

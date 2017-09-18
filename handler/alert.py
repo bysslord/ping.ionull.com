@@ -4,6 +4,7 @@ __author__ = 'xiwei'
 
 from handler import Handler, BaseResponse
 from util.session import is_logged_in
+from util.models.Alert import AlertModel
 
 
 class Alert(Handler):
@@ -19,16 +20,19 @@ class Alert(Handler):
     def visible(self):
         return is_logged_in()
 
-    @staticmethod
-    def emit(response: BaseResponse, domain, username, ds_name, ds_id, when, tables: list):
-        print('test')
-        return 'success'
+    @property
+    def render_kwargs(self):
+        return {
+            'cards': AlertModel.query.all()
+        }
 
     @staticmethod
-    def list(response: BaseResponse):
+    def list(response: BaseResponse, filter_by: dict, order_by: str):
         """
         alert a message
+        :param order_by:
+        :param filter_by:
         :param response:
         :return:
         """
-        response.call('alert', ('test', 'success'))
+        print(AlertModel.query)

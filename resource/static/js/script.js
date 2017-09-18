@@ -7,15 +7,28 @@ function alert(message, level) {
     var el = $('.alert');
     $('.alert-message').html(message);
     el.addClass('alert-' + level);
-    el.show();
+    el.slideDown();
+
+    setTimeout(function () {
+        el.slideUp()
+    }, 2000)
 }
+
+var log = {};
+log.info = function (message) {
+    $.post('/log/info', {message: message})
+};
+
+log.error = function (message) {
+    $.post('/log/error', {message: message})
+};
 
 $(document).ready(
     function () {
         $('#alert').hide();
 
         $('#alert-close').click(function () {
-            $(this).parent().hide();
+            $(this).parent().slideUp();
         });
     }
 );

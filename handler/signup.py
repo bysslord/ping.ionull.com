@@ -3,6 +3,7 @@
 __author__ = 'xiwei'
 
 from handler import Handler, render_template, BaseResponse
+from util.session import is_logged_in
 
 
 class SignUp(Handler):
@@ -11,7 +12,10 @@ class SignUp(Handler):
     """
 
     name = '注册'
-    order = 1
+
+    @property
+    def visible(self):
+        return not is_logged_in()
 
     @staticmethod
     def alert(response: BaseResponse):
